@@ -10,4 +10,8 @@ export class MagicItemService {
   createMagicItem(createMagicItemDto: CreateMagicItemDto) {
     return this.magicItemRepository.save(createMagicItemDto);
   }
+
+  findAllMagicItems() {
+    return this.magicItemRepository.find();
+  }
 }
