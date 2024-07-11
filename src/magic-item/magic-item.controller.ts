@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { MagicItemService } from './magic-item.service';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
 
@@ -9,5 +9,10 @@ export class MagicItemController {
   @Post()
   create(@Body() createMagicItemDto: CreateMagicItemDto) {
     return this.magicItemService.createMagicItem(createMagicItemDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.magicItemService.findAllMagicItems();
   }
 }
