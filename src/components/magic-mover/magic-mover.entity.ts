@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { QuestState } from './magic-mover.enum';
 import { Mission } from '../mission/mission.entity';
+import { MagicItem } from '../magic-item/magic-item.entity';
 
 @Entity({ name: 'magic_movers' })
 export class MagicMover {
@@ -37,6 +38,9 @@ export class MagicMover {
     default: QuestState.RESTING,
   })
   questState: QuestState;
+
+  @OneToMany(() => MagicItem, (item) => item.mover)
+  items: MagicItem[];
 
   @OneToMany(() => Mission, (mission) => mission.mover)
   missions: Mission[];

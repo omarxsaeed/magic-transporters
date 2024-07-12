@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Mission } from '../mission/mission.entity';
+import { MagicMover } from '../magic-mover/magic-mover.entity';
 
 @Entity({ name: 'magic_items' })
 export class MagicItem {
@@ -24,6 +25,9 @@ export class MagicItem {
   @ApiProperty()
   @Column()
   weight: number;
+
+  @ManyToOne(() => MagicMover, (mover) => mover.items)
+  mover: MagicMover;
 
   @ManyToOne(() => Mission, (mission) => mission.items)
   mission: Mission;
