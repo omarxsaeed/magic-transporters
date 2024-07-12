@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MagicItemModule } from './components/magic-item/magic-item.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -26,6 +27,17 @@ import { MagicItemModule } from './components/magic-item/magic-item.module';
         synchronize: true,
       }),
       inject: [ConfigService],
+    }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            singleLine: true,
+          },
+        },
+      },
     }),
     MagicItemModule,
   ],
