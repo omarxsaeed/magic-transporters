@@ -8,7 +8,7 @@ export class MagicItemController {
   constructor(private readonly magicItemService: MagicItemService) {}
 
   @Post()
-  create(@Body() createMagicItemDto: CreateMagicItemDto) {
+  async create(@Body() createMagicItemDto: CreateMagicItemDto) {
     return this.magicItemService.createMagicItem(createMagicItemDto);
   }
 
