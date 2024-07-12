@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MagicItem, MagicItemRepository } from './magic-item.entity';
@@ -14,4 +14,14 @@ export class MagicItemService {
   findAllMagicItems() {
     return this.magicItemRepository.find();
   }
+
+  async findOneMagicItem(id: number): Promise<MagicItem> {
+    try {
+      const magicItem = await this.magicItemRepository.findOneOrFail({ where: { id } });
+      return magicItem;
+    } catch {
+      throw new NotFoundException(`Magic item with id ${id} not found`);
+    }
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { MagicItemService } from './magic-item.service';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
 
@@ -14,5 +14,10 @@ export class MagicItemController {
   @Get()
   findAll() {
     return this.magicItemService.findAllMagicItems();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    return this.magicItemService.findOneMagicItem(id);
   }
 }
