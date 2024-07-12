@@ -4,10 +4,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Repository,
   UpdateDateColumn,
 } from 'typeorm';
+import { Mission } from '../mission/mission.entity';
 
 @Entity({ name: 'magic_items' })
 export class MagicItem {
@@ -22,6 +24,9 @@ export class MagicItem {
   @ApiProperty()
   @Column()
   weight: number;
+
+  @ManyToOne(() => Mission, (mission) => mission.items)
+  mission: Mission;
 
   @ApiProperty()
   @CreateDateColumn()

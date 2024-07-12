@@ -4,11 +4,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Repository,
   UpdateDateColumn,
 } from 'typeorm';
 import { QuestState } from './magic-mover.enum';
+import { Mission } from '../mission/mission.entity';
 
 @Entity({ name: 'magic_movers' })
 export class MagicMover {
@@ -35,6 +37,9 @@ export class MagicMover {
     default: QuestState.RESTING,
   })
   questState: QuestState;
+
+  @OneToMany(() => Mission, (mission) => mission.mover)
+  missions: Mission[];
 
   @ApiProperty()
   @CreateDateColumn()
