@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { MagicItemModule } from './magic-item/magic-item.module';
+import { MagicItemModule } from './components/magic-item/magic-item.module';
 
 @Module({
   imports: [
