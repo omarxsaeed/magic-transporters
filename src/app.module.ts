@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MagicItemModule } from './components/magic-item/magic-item.module';
 import { LoggerModule } from 'nestjs-pino';
+import { MagicMoverModule } from './components/magic-mover/magic-mover.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { LoggerModule } from 'nestjs-pino';
       },
     }),
     MagicItemModule,
+    MagicMoverModule,
   ],
   controllers: [],
   providers: [],
