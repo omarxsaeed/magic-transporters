@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MagicMoverService } from './magic-mover.service';
 import { CreateMagicMoverDto } from './dto/create-magic-mover.dto';
 import { UpdateMagicMoverDto } from './dto/update-magic-mover.dto';
@@ -27,5 +27,10 @@ export class MagicMoverController {
   @Patch(':id')
   async update(@Param('id') id: number, @Body() updateMagicMoverDto: UpdateMagicMoverDto) {
     return this.magicMoverService.updateMagicMover(id, updateMagicMoverDto);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: number) {
+    return this.magicMoverService.removeMagicMover(id);
   }
 }

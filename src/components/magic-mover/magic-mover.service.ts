@@ -45,4 +45,16 @@ export class MagicMoverService {
 
     return this.findOneMagicMover(id);
   }
+
+  async removeMagicMover(id: number) {
+    const magicMover = await this.findOneMagicMover(id);
+
+    await this.magicMoverRepository.softDelete({ id });
+
+    return {
+      status: 'success',
+      message: `Magic Mover ${magicMover.name} with id ${magicMover.id} has been deleted successfully`,
+      data: { id: magicMover.id, name: magicMover.name },
+    };
+  }
 }
