@@ -26,6 +26,9 @@ import { MagicMoverModule } from './components/magic-mover/magic-mover.module';
         logging: true,
         logger: 'advanced-console',
         synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [ConfigService],
     }),
