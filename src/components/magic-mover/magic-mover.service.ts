@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMagicMoverDto } from './dto/create-magic-mover.dto';
+import { UpdateMagicMoverDto } from './dto/update-magic-mover.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MagicMover, MagicMoverRepository } from './magic-mover.entity';
 import { PinoLogger } from 'nestjs-pino';
@@ -26,12 +27,22 @@ export class MagicMoverService {
     return this.magicMoverRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOneMagicMover(id: number) {
     try {
       const magicMover = await this.magicMoverRepository.findOneOrFail({ where: { id } });
       return magicMover;
     } catch {
       throw new NotFoundException(`Magic mover with id ${id} not found`);
     }
+  }
+
+  async updateMagicMover(id: number, updateMagicMoverDto: UpdateMagicMoverDto) {
+    await this.findOneMagicMover(id);
+
+    await this.magicMoverRepository.update({ id }, updateMagicMoverDto);
+
+    this.logger.info(`Magic mover with id ${id} updated: ${JSON.stringify(updateMagicMoverDto)}`);
+
+    return this.findOneMagicMover(id);
   }
 }

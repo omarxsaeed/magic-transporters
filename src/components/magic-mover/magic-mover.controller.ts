@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { MagicMoverService } from './magic-mover.service';
 import { CreateMagicMoverDto } from './dto/create-magic-mover.dto';
+import { UpdateMagicMoverDto } from './dto/update-magic-mover.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Magic Mover')
@@ -20,8 +21,11 @@ export class MagicMoverController {
 
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return this.magicMoverService.findOne(id);
+    return this.magicMoverService.findOneMagicMover(id);
   }
 
+  @Patch(':id')
+  async update(@Param('id') id: number, @Body() updateMagicMoverDto: UpdateMagicMoverDto) {
+    return this.magicMoverService.updateMagicMover(id, updateMagicMoverDto);
   }
 }
