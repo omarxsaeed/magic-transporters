@@ -21,4 +21,8 @@ export class MagicMoverService {
 
     return this.magicMoverRepository.save(newMagicMover);
   }
+
+  findAll() {
+    return this.magicMoverRepository.find();
+  }
 }

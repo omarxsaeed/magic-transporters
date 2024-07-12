@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { MagicMoverService } from './magic-mover.service';
 import { CreateMagicMoverDto } from './dto/create-magic-mover.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -9,7 +9,12 @@ export class MagicMoverController {
   constructor(private readonly magicMoverService: MagicMoverService) {}
 
   @Post()
-  create(@Body() createMagicMoverDto: CreateMagicMoverDto) {
+  async create(@Body() createMagicMoverDto: CreateMagicMoverDto) {
     return this.magicMoverService.createMagicMover(createMagicMoverDto);
+  }
+
+  @Get()
+  async findAll() {
+    return this.magicMoverService.findAll();
   }
 }
