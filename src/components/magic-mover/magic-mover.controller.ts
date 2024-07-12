@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { MagicMoverService } from './magic-mover.service';
 import { CreateMagicMoverDto } from './dto/create-magic-mover.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,5 +16,12 @@ export class MagicMoverController {
   @Get()
   async findAll() {
     return this.magicMoverService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    return this.magicMoverService.findOne(id);
+  }
+
   }
 }
