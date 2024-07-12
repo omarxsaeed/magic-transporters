@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { MagicItemService } from './magic-item.service';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
+import { UpdateMagicItemDto } from './dto/update-magic-item.dto';
 
 @Controller('magic-item')
 export class MagicItemController {
@@ -20,4 +21,10 @@ export class MagicItemController {
   async findOne(@Param('id') id: number) {
     return this.magicItemService.findOneMagicItem(id);
   }
+
+  @Patch(':id')
+  async update(@Param('id') id: number, @Body() updateMagicItemDto: UpdateMagicItemDto) {
+    return this.magicItemService.updateMagicItem(id, updateMagicItemDto);
+  }
+
 }
