@@ -33,4 +33,15 @@ export class MagicItemService {
     return this.findOneMagicItem(id);
   }
 
+  async removeMagicItem(id: number) {
+    const magicItem = await this.findOneMagicItem(id);
+
+    await this.magicItemRepository.softDelete({ id });
+
+    return {
+      status: 'success',
+      message: `Magic item ${magicItem.name} with id ${magicItem.id} has been deleted successfully`,
+      data: { id: magicItem.id, name: magicItem.name },
+    };
+  }
 }

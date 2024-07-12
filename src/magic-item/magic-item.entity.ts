@@ -1,5 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from 'typeorm';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Repository,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'magic_items' })
 export class MagicItem {
@@ -22,6 +30,10 @@ export class MagicItem {
   @ApiProperty()
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @ApiPropertyOptional()
+  @DeleteDateColumn()
+  deletedAt!: Date;
 }
 
 export type MagicItemRepository = Repository<MagicItem>;

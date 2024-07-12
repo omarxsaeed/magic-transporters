@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MagicItemService } from './magic-item.service';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
 import { UpdateMagicItemDto } from './dto/update-magic-item.dto';
@@ -27,4 +27,8 @@ export class MagicItemController {
     return this.magicItemService.updateMagicItem(id, updateMagicItemDto);
   }
 
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.magicItemService.removeMagicItem(id);
+  }
 }
