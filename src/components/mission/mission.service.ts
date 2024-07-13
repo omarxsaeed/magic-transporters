@@ -7,6 +7,7 @@ import { QuestState } from '../magic-mover/magic-mover.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Mission, MissionRepository } from './mission.entity';
 import { MissionStatus } from './mission.enum';
+import { MagicMover } from '../magic-mover/magic-mover.entity';
 
 @Injectable()
 export class MissionService {
@@ -48,6 +49,32 @@ export class MissionService {
     } catch {
       throw new NotFoundException(`Mission with id ${id} not found`);
     }
+  }
+
+  async getTopMissionCompleters() {
+    const result = await this.missionRepository
+      .createQueryBuilder('mission')
+      .leftJoin('mission.mover', 'mover')
+      .where('mission.status = :status', { status: MissionStatus.DONE })
+      .groupBy('mover.id')
+      .addGroupBy('mover.name')
+      .select(['mover.id', 'mover.name', 'COUNT(mission.id) AS completedMissions'])
+      .orderBy('completedMissions', 'DESC')
+      .getRawMany();
+
+    if (!result) {
+      throw new NotFoundException('No movers with completed missions found');
+    }
+
+    return result.map((row) => {
+      return {
+        mover: {
+          id: row.mover_id,
+          name: row.mover_name,
+        },
+        completedMissions: parseInt(row.completedmissions, 10),
+      };
+    });
   }
 
   async endMission(id: number, updateMissionDto: UpdateMissionDto) {

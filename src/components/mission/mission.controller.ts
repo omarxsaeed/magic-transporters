@@ -19,6 +19,11 @@ export class MissionController {
     return this.missionService.findAllMissions();
   }
 
+  @Get('top-completers')
+  async getTopMissionCompleters() {
+    return this.missionService.getTopMissionCompleters();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return this.missionService.findOneMission(id);
