@@ -57,7 +57,9 @@ export class MagicMoverService {
     }
 
     // Check for items availability
-    const items = await this.magicItemService.checkLoadedMagicItems(itemsIds);
+    let items = await this.magicItemService.checkLoadedMagicItems(itemsIds);
+
+    items.push(...magicMover.items);
 
     // Calculate total weight of items to be loaded
     const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
