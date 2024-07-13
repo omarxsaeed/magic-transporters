@@ -11,6 +11,14 @@ async function bootstrap() {
 
   app.useLogger(app.get(Logger));
 
+  const config = new DocumentBuilder()
+    .setTitle('Magic Transporters')
+    .setDescription('Magic Transporters API Documentations')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
   app.use(helmet());
 
   app.enableCors();
@@ -20,14 +28,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   app.setGlobalPrefix('api');
-
-  const config = new DocumentBuilder()
-    .setTitle('Magic Transporters')
-    .setDescription('Magic Transporters API Documentations')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
 
   await app.listen(configService.get('PORT'));
 }
