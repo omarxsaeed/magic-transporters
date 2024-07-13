@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MagicItemService } from './magic-item.service';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
 import { UpdateMagicItemDto } from './dto/update-magic-item.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Magic Item')
 @Controller('magic-item')
 export class MagicItemController {
   constructor(private readonly magicItemService: MagicItemService) {}
