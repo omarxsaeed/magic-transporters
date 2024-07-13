@@ -52,6 +52,10 @@ export class MagicMoverService {
   async loadMagicMover(id: number, itemsIds: number[]) {
     const magicMover = await this.findOneMagicMover(id);
 
+    if (magicMover.questState === QuestState.ON_MISSION) {
+      throw new BadRequestException(`Magic mover ${magicMover.name} is on a mission now and is not ready for loading`);
+    }
+
     // Check for items availability
     const items = await this.magicItemService.checkLoadedMagicItems(itemsIds);
 
