@@ -72,4 +72,9 @@ export class MissionService {
 
     return mission;
   }
+
+  async removeMission(id: number) {
+    await this.findOneMission(id);
+    return this.missionRepository.softDelete(id);
+  }
 }

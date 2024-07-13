@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MissionService } from './mission.service';
 import { CreateMissionDto } from './dto/create-mission.dto';
 import { UpdateMissionDto } from './dto/update-mission.dto';
@@ -27,5 +27,10 @@ export class MissionController {
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateMissionDto: UpdateMissionDto) {
     return this.missionService.endMission(id, updateMissionDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.missionService.removeMission(id);
   }
 }
