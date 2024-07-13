@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MissionService } from './mission.service';
 import { CreateMissionDto } from './dto/create-mission.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,5 +16,10 @@ export class MissionController {
   @Get()
   async findAll() {
     return this.missionService.findAllMissions();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    return this.missionService.findOneMission(id);
   }
 }

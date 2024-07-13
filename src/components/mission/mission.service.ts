@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMissionDto } from './dto/create-mission.dto';
 import { PinoLogger } from 'nestjs-pino';
 import { MagicMoverService } from '../magic-mover/magic-mover.service';
@@ -37,5 +37,14 @@ export class MissionService {
 
   async findAllMissions() {
     return this.missionRepository.find({ relations: ['mover', 'items'] });
+  }
+
+  async findOneMission(id: number) {
+    try {
+      const mission = await this.missionRepository.findOneOrFail({ where: { id }, relations: ['mover', 'items'] });
+      return mission;
+    } catch {
+      throw new NotFoundException(`Mission with id ${id} not found`);
+    }
   }
 }
