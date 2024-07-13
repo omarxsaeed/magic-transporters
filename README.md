@@ -4,6 +4,17 @@
 
 Magic Transporters is a backend API for managing a system of Magic Movers, Magic Items, and Missions. It's built with NestJS, TypeScript, PostgreSQL and TypeORM, providing a robust and scalable solution for tracking and managing magical transportation operations.
 
+## Table of Contents
+
+- [Features](#features)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Running the app](#running-the-app)
+- [Usage](#usage)
+  - [Magic Movers Endpoints](#magic-movers-endpoints)
+  - [Magic Items Endpoints](#magic-items-endpoints)
+  - [Mission Endpoints](#mission-endpoints)
+
 ## Features
 
 - Manage Magic Movers: Create, update, and retrieve magical movers.
@@ -200,11 +211,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ``` -->
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-
-```
-
-```
