@@ -34,4 +34,8 @@ export class MissionService {
 
     return this.missionRepository.save(newMission);
   }
+
+  async findAllMissions() {
+    return this.missionRepository.find({ relations: ['mover', 'items'] });
+  }
 }

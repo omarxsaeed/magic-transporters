@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { MissionService } from './mission.service';
 import { CreateMissionDto } from './dto/create-mission.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -9,7 +9,12 @@ export class MissionController {
   constructor(private readonly missionService: MissionService) {}
 
   @Post()
-  create(@Body() createMissionDto: CreateMissionDto) {
+  async create(@Body() createMissionDto: CreateMissionDto) {
     return this.missionService.createMission(createMissionDto);
+  }
+
+  @Get()
+  async findAll() {
+    return this.missionService.findAllMissions();
   }
 }
