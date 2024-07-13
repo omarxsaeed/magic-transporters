@@ -39,7 +39,10 @@ export class MagicMover {
   })
   questState: QuestState;
 
-  @OneToMany(() => MagicItem, (item) => item.mover)
+  @OneToMany(() => MagicItem, (item) => item.mover, {
+    cascade: true,
+    onDelete: 'SET NULL',
+  })
   items: MagicItem[];
 
   @OneToMany(() => Mission, (mission) => mission.mover)
