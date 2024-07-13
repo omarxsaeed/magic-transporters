@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMagicItemDto } from './dto/create-magic-item.dto';
 import { UpdateMagicItemDto } from './dto/update-magic-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MagicItem, MagicItemRepository } from './magic-item.entity';
 import { PinoLogger } from 'nestjs-pino';
+import { In, IsNull } from 'typeorm';
 
 @Injectable()
 export class MagicItemService {
@@ -24,6 +25,30 @@ export class MagicItemService {
 
   async findAllMagicItems() {
     return this.magicItemRepository.find();
+  }
+
+  async checkLoadedMagicItems(itemsIds: number[]) {
+    // Find items with provided IDs that are not loaded (mover is null)
+    const availableItems = await this.magicItemRepository.find({
+      where: {
+        id: In(itemsIds),
+        mover: IsNull(),
+      },
+    });
+
+    // Extract IDs of found items
+    const availableItemsIds = availableItems.map((item) => item.id);
+
+    // Filter out item IDs that were not found in the database (already loaded)
+    const loadedItemsIds = itemsIds.filter((itemId) => !availableItemsIds.includes(itemId));
+
+    // If there are loaded items, throw an error
+    if (loadedItemsIds.length > 0) {
+      const errorMessage = loadedItemsIds.map((itemId) => `Item ${itemId}`).join(', ');
+      throw new BadRequestException(`Item(s) already loaded: ${errorMessage}. Please choose other item(s) to load.`);
+    }
+
+    return availableItems; // Return the items that can be safely loaded
   }
 
   async findOneMagicItem(id: number): Promise<MagicItem> {
