@@ -1,5 +1,4 @@
 export enum MissionStatus {
-  LOADING = 'loading',
-  IN_PROGRESS = 'in progress',
+  STARTED = 'started',
   DONE = 'done',
 }

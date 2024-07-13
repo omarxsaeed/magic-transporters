@@ -9,5 +9,6 @@ import { MagicItemModule } from '../magic-item/magic-item.module';
   imports: [TypeOrmModule.forFeature([MagicMover]), MagicItemModule],
   controllers: [MagicMoverController],
   providers: [MagicMoverService],
+  exports: [MagicMoverService],
 })
 export class MagicMoverModule {}

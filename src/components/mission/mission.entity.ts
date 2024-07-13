@@ -20,7 +20,7 @@ export class Mission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: MissionStatus, default: MissionStatus.LOADING })
+  @Column({ type: 'enum', enum: MissionStatus, default: MissionStatus.STARTED })
   status: MissionStatus;
 
   @ManyToOne(() => MagicMover, (mover) => mover.missions)
@@ -44,3 +44,5 @@ export class Mission {
   @DeleteDateColumn()
   deletedAt!: Date;
 }
+
+export type MissionRepository = Repository<Mission>;
