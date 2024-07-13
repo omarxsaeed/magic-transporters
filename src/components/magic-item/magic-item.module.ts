@@ -8,5 +8,6 @@ import { MagicItem } from './magic-item.entity';
   imports: [TypeOrmModule.forFeature([MagicItem])],
   controllers: [MagicItemController],
   providers: [MagicItemService],
+  exports: [MagicItemService],
 })
 export class MagicItemModule {}

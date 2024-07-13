@@ -3,9 +3,10 @@ import { MagicMoverService } from './magic-mover.service';
 import { MagicMoverController } from './magic-mover.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MagicMover } from './magic-mover.entity';
+import { MagicItemModule } from '../magic-item/magic-item.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MagicMover])],
+  imports: [TypeOrmModule.forFeature([MagicMover]), MagicItemModule],
   controllers: [MagicMoverController],
   providers: [MagicMoverService],
 })
