@@ -26,7 +26,10 @@ export class Mission {
   @ManyToOne(() => MagicMover, (mover) => mover.missions)
   mover: MagicMover;
 
-  @OneToMany(() => MagicItem, (item) => item.mission)
+  @OneToMany(() => MagicItem, (item) => item.mission, {
+    cascade: true,
+    onUpdate: 'SET NULL',
+  })
   items: MagicItem[];
 
   @ApiProperty()
@@ -35,9 +38,6 @@ export class Mission {
 
   @ApiProperty()
   @UpdateDateColumn()
-  updatedAt!: Date;
-
-  @Column({ type: 'timestamp', nullable: true })
   endedAt: Date;
 
   @ApiPropertyOptional()
