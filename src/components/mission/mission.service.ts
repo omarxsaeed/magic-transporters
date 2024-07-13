@@ -1,10 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMissionDto } from './dto/create-mission.dto';
+import { UpdateMissionDto } from './dto/update-mission.dto';
 import { PinoLogger } from 'nestjs-pino';
 import { MagicMoverService } from '../magic-mover/magic-mover.service';
 import { QuestState } from '../magic-mover/magic-mover.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Mission, MissionRepository } from './mission.entity';
+import { MissionStatus } from './mission.enum';
 
 @Injectable()
 export class MissionService {
@@ -46,5 +48,28 @@ export class MissionService {
     } catch {
       throw new NotFoundException(`Mission with id ${id} not found`);
     }
+  }
+
+  async endMission(id: number, updateMissionDto: UpdateMissionDto) {
+    const mission = await this.findOneMission(id);
+
+    if (mission.status === MissionStatus.DONE) {
+      throw new BadRequestException('Mission is already done');
+    }
+
+    if (updateMissionDto.status === MissionStatus.STARTED && mission.status === MissionStatus.STARTED) {
+      throw new BadRequestException('Mission already started');
+    }
+
+    await this.magicMoverService.unloadMagicMover(mission.mover.id);
+
+    mission.items = [];
+    mission.status = updateMissionDto.status;
+
+    await this.missionRepository.save(mission);
+
+    this.logger.info(`Mission with id ${id} is done successfully`);
+
+    return mission;
   }
 }
