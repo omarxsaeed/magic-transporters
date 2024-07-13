@@ -75,7 +75,21 @@ export class MagicMoverService {
     // Save the updated magicMover entity
     await this.magicMoverRepository.save(magicMover);
 
-    this.logger.info(`Magic mover ${magicMover.name} with id ${id} is loaded with items: ${items}}`);
+    this.logger.info(`Magic mover ${magicMover.name} with id ${id} is loaded with items: ${items}`);
+
+    return this.findOneMagicMover(id);
+  }
+
+  async unloadMagicMover(id: number) {
+    const magicMover = await this.findOneMagicMover(id);
+
+    magicMover.items = [];
+    magicMover.questState = QuestState.DONE;
+
+    // Save the updated magicMover entity
+    await this.magicMoverRepository.save(magicMover);
+
+    this.logger.info(`Magic mover ${magicMover.name} with id ${id} has unloaded its items: ${magicMover.items}`);
 
     return this.findOneMagicMover(id);
   }
